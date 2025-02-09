@@ -35,18 +35,18 @@ const AddSet = ({ onAdd }) => {
   return (
     <form onSubmit={handleSubmit} className="p-4 border rounded">
       <div className="mb-2">
-        <label className="block font-bold">Set Name:</label>
+        <label className="block font-bold">Name: </label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border p-2 rounded w-full text-black"
+          className="border p-2  w-full text-black rounded-lg"
         />
       </div>
       <button
         type="submit"
         disabled={loading}
-        className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+        className="bg-stone-700 text-white px-8 py-2 rounded-lg mb-4 hover:bg-stone-600 w-full "
       >
         {loading ? "Lädt..." : "Set hinzufügen"}
       </button>

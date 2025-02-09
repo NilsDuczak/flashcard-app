@@ -49,17 +49,30 @@ function App() {
     setFlashcards([...flashcards, newCard]);
   };
 
+  const handleDelete = async (id) => {
+    const { error } = await supabase.from("flashcards").delete().eq("id", id);
+
+    if (error) {
+      console.log("Fehler beim löschen der Karte", error);
+    } else {
+      setFlashcards(flashcards.filter((flashcard) => flashcard.id !== id));
+    }
+  };
   return (
-    <div className="flex">
+    <div className="flex bg-stone-100">
       <Sidebar
         sets={sets}
         selectedSet={selectedSet}
         setSelectedSet={setSelectedSet}
         onAddSet={handleAddSet}
       />
-      <div className="flex flex-col flex-1 ml-64">
-        <Header setId={selectedSet?.id} onAdd={handleAddFlashCard} />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xlg:grid-cols-4 gap-4 mt-32 px-4">
+      <div className="flex flex-col flex-1 ml-64 bg-stone-100">
+        <Header
+          selectedSet={selectedSet}
+          setId={selectedSet?.id}
+          onAdd={handleAddFlashCard}
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xlg:grid-cols-4 gap-4 mt-32 px-4 bg-stone-100">
           {selectedSet && (
             <>
               {flashcards.length > 0 ? (
@@ -68,10 +81,14 @@ function App() {
                     key={card.id}
                     question={card.question}
                     answer={card.answer}
+                    onDelete={() => handleDelete(card.id)}
                   />
                 ))
               ) : (
-                <p>Lade Fragen...</p>
+                <p className="text-stone-900 text-xl bg-stone-100">
+                  Noch keine Karten vorhanden.
+                  <br /> Füge Karten hinzu oder wähle ein anderes Lernset aus.
+                </p>
               )}
             </>
           )}
