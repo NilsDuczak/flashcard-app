@@ -11,10 +11,16 @@ const Sidebar = ({
   onAddSet,
   onDeleteSet,
 }) => {
+  {
+    /*States */
+  }
   const [showAddSetForm, setShowAddSetForm] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [setToDelete, setSetToDelete] = useState(null);
 
+  {
+    /*Modal Functions */
+  }
   const openModal = (setId) => {
     setSetToDelete(setId);
     setIsModalOpen(true);

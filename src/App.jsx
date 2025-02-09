@@ -6,9 +6,17 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 
 function App() {
+  {
+    /*States */
+  }
+
   const [sets, setSets] = useState([]);
   const [selectedSet, setSelectedSet] = useState(null);
   const [flashcards, setFlashcards] = useState([]);
+
+  {
+    /*Use Effects */
+  }
 
   useEffect(() => {
     const fetchSets = async () => {
@@ -40,6 +48,10 @@ function App() {
       fetchFlashcards();
     }
   }, [selectedSet]);
+
+  {
+    /*Functions */
+  }
 
   const handleAddSet = (newSet) => {
     setSets([...sets, newSet]);
