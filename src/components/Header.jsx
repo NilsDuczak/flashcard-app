@@ -9,14 +9,16 @@ const Header = ({ selectedSet, setId, onAdd }) => {
       <h1 className="text-3xl font-bold ">
         {selectedSet
           ? `Aktuelles Set: ${selectedSet.name}`
-          : "Bitte wähle ein Set aus."}
+          : "Bitte ein Set auswählen / hinzufügen"}
       </h1>
-      <button
-        className="bg-stone-700 text-stone-100 px-4 py-2 rounded-lg"
-        onClick={() => setShowForm(!showForm)}
-      >
-        {showForm ? "Schließen" : "Lernkarte hinzufügen"}
-      </button>
+      {selectedSet && (
+        <button
+          className="bg-stone-700 text-stone-100 px-4 py-2 rounded-lg hover:bg-stone-600"
+          onClick={() => setShowForm(!showForm)}
+        >
+          {showForm ? "Schließen" : "Lernkarte hinzufügen"}
+        </button>
+      )}
       {showForm && (
         <Modal onClose={() => setShowForm(false)}>
           <AddFlashCard setId={setId} onAdd={onAdd} />

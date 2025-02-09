@@ -1,5 +1,7 @@
 import React from "react";
-import Modal from "react-Modal";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, setId }) => {
   return (

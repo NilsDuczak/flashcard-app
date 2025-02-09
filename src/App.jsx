@@ -61,9 +61,9 @@ function App() {
 
   const handleDeleteSet = async (setId) => {
     const { error: deleteCardsError } = await supabase
-      .from("sets")
+      .from("flashcards")
       .delete()
-      .eq("id", setId);
+      .eq("set_id", setId);
 
     if (deleteCardsError) {
       console.log("Fehler beim löschen der Karten:", deleteCardsError);
