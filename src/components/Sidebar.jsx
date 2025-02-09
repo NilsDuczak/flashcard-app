@@ -1,9 +1,34 @@
 import { useState } from "react";
 import AddSet from "./AddSet";
 import Logo from "../assets/logo.png";
+import { FaTrashAlt } from "react-icons/fa";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
-const Sidebar = ({ sets, selectedSet, setSelectedSet, onAddSet }) => {
+const Sidebar = ({
+  sets,
+  selectedSet,
+  setSelectedSet,
+  onAddSet,
+  onDeleteSet,
+}) => {
   const [showAddSetForm, setShowAddSetForm] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [setToDelete, setSetToDelete] = useState(null);
+
+  const openModal = (setId) => {
+    setSetToDelete(setId);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSetToDelete(null);
+  };
+
+  const handleDeleteSet = async (setId) => {
+    await onDeleteSet(setId);
+    closeModal();
+  };
 
   return (
     <aside className="fixed top-0 left-0 h-full w-64 bg-stone-500 text-stone-50 p-4 ">
@@ -29,13 +54,28 @@ const Sidebar = ({ sets, selectedSet, setSelectedSet, onAddSet }) => {
               selectedSet && selectedSet.id === set.id
                 ? " text-white bg-stone-400 "
                 : "bg-stone-500 "
-            }`}
+            } flex items-center justify-between`}
             onClick={() => setSelectedSet(set)}
           >
-            {set.name}
+            <span className="flex-1 text-left">{set.name}</span>
+            <button
+              className="hover:text-red-500 "
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal(set.id);
+              }}
+            >
+              <FaTrashAlt size={20} />
+            </button>
           </li>
         ))}
       </ul>
+      <ConfirmDeleteModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={handleDeleteSet}
+        setId={setToDelete}
+      />
     </aside>
   );
 };

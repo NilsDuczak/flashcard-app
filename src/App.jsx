@@ -58,6 +58,33 @@ function App() {
       setFlashcards(flashcards.filter((flashcard) => flashcard.id !== id));
     }
   };
+
+  const handleDeleteSet = async (setId) => {
+    const { error: deleteCardsError } = await supabase
+      .from("sets")
+      .delete()
+      .eq("id", setId);
+
+    if (deleteCardsError) {
+      console.log("Fehler beim löschen der Karten:", deleteCardsError);
+      return;
+    }
+    const { error: deleteSetError } = await supabase
+      .from("sets")
+      .delete()
+      .eq("id", setId);
+
+    if (deleteSetError) {
+      console.log("Fehler beim löschen des Sets", deleteSetError);
+    } else {
+      setSets(sets.filter((set) => set.id !== setId));
+
+      if (selectedSet?.id === setId) {
+        setSelectedSet(null);
+      }
+    }
+  };
+
   return (
     <div className="flex bg-stone-100">
       <Sidebar
@@ -65,6 +92,7 @@ function App() {
         selectedSet={selectedSet}
         setSelectedSet={setSelectedSet}
         onAddSet={handleAddSet}
+        onDeleteSet={handleDeleteSet}
       />
       <div className="flex flex-col flex-1 ml-64 bg-stone-100">
         <Header
