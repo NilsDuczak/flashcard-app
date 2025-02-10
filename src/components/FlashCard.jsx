@@ -5,16 +5,17 @@ const Flashcard = ({ question, answer, onDelete }) => {
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <div className="perspective-1000">
+    <div className="perspective-1000 w-full h-64 z-10">
       <div
-        className={`relative w-full h-56 text-white flex items-center justify-center
+        className={`relative w-full h-full text-white flex items-center justify-center  mt-44
             text-xl font-bold rounded-xl cursor-pointer transition-transform 
-            whitespace-pre-wrap text-center overflow-visible p-4 duration-700 transform-style-3d
-            ${flipped ? "rotate-y-180" : ""}`}
+            whitespace-pre-wrap text-center overflow-visible p-4 duration-1000 ease-in-out transform-style-3d  transform-gpu 
+            ${flipped ? "rotate-y-180 scale-105" : "scale-100"}`}
+        style={{ willChange: "transform" }}
         onClick={() => setFlipped(!flipped)}
       >
         <div
-          className="absolute top-2 right-2 cursor-pointer text-white z-20 hover:text-red-500"
+          className="absolute top-2 right-2 cursor-pointer text-white hover:text-red-500 z-20 shadow-lg"
           onClick={(e) => {
             e.stopPropagation();
             onDelete();
@@ -23,7 +24,7 @@ const Flashcard = ({ question, answer, onDelete }) => {
           <FaTrashAlt size={20} />
         </div>
         <div
-          className={`absolute top-0 left-0 right-0 text-sm text-center py-2 font-semibold bg-stone-600 bg-opacity-75 z-10 rounded-t-xl rounded-b-none ${
+          className={`absolute top-0 left-0 right-0 text-sm text-center py-2 font-semibold bg-stone-700 bg-opacity-75 z-10 rounded-t-xl rounded-b-none shadow-lg ${
             flipped ? "rotate-y-180" : ""
           }`}
         >
@@ -32,13 +33,13 @@ const Flashcard = ({ question, answer, onDelete }) => {
 
         <div
           className="absolute w-full h-full bg-stone-400 flex items-center justify-center 
-                    rounded-xl backface-hidden p-4 whitespace-pre-wrap overflow-auto border-2 border-stone-700"
+                    rounded-xl backface-hidden p-4 whitespace-pre-wrap overflow-auto border-2 border-stone-700 backface-hidden"
         >
           {question}
         </div>
         <div
           className="absolute w-full h-full bg-stone-400 flex items-center justify-center
-                 rounded-xl backface-hidden  p-2 rotate-y-180 whitespace-pre-wrap overflow-auto border-2 border-stone-700"
+                 rounded-xl backface-hidden  p-4 rotate-y-180 whitespace-pre-wrap overflow-auto border-2 border-stone-700 backface-hidden"
         >
           {answer}
         </div>

@@ -16,7 +16,7 @@ const Modal = ({ children, onClose }) => {
     >
       <div
         ref={modalRef}
-        className="bg-white p-8 rounded-lg shadow-lg relative"
+        className="bg-white p-8 rounded-lg shadow-lg relative z-50"
       >
         <button
           ref={modalRef}

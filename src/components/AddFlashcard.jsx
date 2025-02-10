@@ -40,7 +40,7 @@ const AddFlashCard = ({ setId, onAdd }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-4 border rounded bg-stone-400 w-96 flex flex-col justify-between h-full"
+      className="p-4 border rounded bg-stone-400 w-96 flex flex-col justify-between h-full z-50"
     >
       <div className="mb-2">
         <label className="block font-bold">Frage:</label>
@@ -64,7 +64,7 @@ const AddFlashCard = ({ setId, onAdd }) => {
         <button
           type="submit"
           disabled={loading}
-          className="bg-stone-700 text-stone-100 px-4 py-2 rounded mt-2 "
+          className="bg-stone-700 text-stone-100 px-4 py-2 rounded mt-2 hover:bg-stone-600"
         >
           {loading ? "Lädt..." : "Lernkarte hinzufügen"}
         </button>

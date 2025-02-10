@@ -98,21 +98,23 @@ function App() {
   };
 
   return (
-    <div className="flex bg-stone-100">
+    <div className="flex ">
       <Sidebar
         sets={sets}
         selectedSet={selectedSet}
         setSelectedSet={setSelectedSet}
         onAddSet={handleAddSet}
         onDeleteSet={handleDeleteSet}
+        onAdd={handleAddFlashCard}
+        setId={selectedSet?.id}
       />
-      <div className="flex flex-col flex-1 ml-64 bg-stone-100">
+      <div className="flex flex-col flex-1 ml-64 ">
         <Header
           selectedSet={selectedSet}
           setId={selectedSet?.id}
           onAdd={handleAddFlashCard}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xlg:grid-cols-4 gap-4 mt-32 px-4 bg-stone-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xlg:grid-cols-4 gap-4 px-4 ">
           {selectedSet && (
             <>
               {flashcards.length > 0 ? (
@@ -125,9 +127,8 @@ function App() {
                   />
                 ))
               ) : (
-                <p className="text-stone-900 text-xl bg-stone-100">
-                  Noch keine Karten vorhanden.
-                  <br /> Füge Karten hinzu oder wähle ein anderes Lernset aus.
+                <p className="text-stone-900 text-xl mt-80 text-center">
+                  Füge Karten hinzu oder wähle ein anderes Lernset aus.
                 </p>
               )}
             </>
