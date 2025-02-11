@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import supabase from "./supabaseClient";
+import { FaTimes } from "react-icons/fa";
 
 const AddFlashcardModal = ({ setId, onAdd, onClose }) => {
   const modalRef = useRef(null);
@@ -49,38 +50,43 @@ const AddFlashcardModal = ({ setId, onAdd, onClose }) => {
     >
       <div
         ref={modalRef}
-        className="bg-white p-8 rounded-lg shadow-lg relative z-60 w-96"
+        className=" p-8 rounded-xl shadow-lg relative z-60 w-96 bg-gray-700"
       >
         <button
-          className="absolute top-2 right-2 text-stone-900 text-2xl hover:text-red-500"
+          className="absolute top-2 right-2 text-gray-600 text-2xl hover:text-red-500 cursor-pointer"
           onClick={onClose}
         >
-          &times;
+          <FaTimes size={26} />
         </button>
-        <h2 className="text-xl font-bold mb-4">Neue Lernkarte hinzufügen</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col">
+        <h2 className="text-2xl font-bold mb-4 text-white rounded-xl ">
+          Lernkarte:
+        </h2>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col text-white text-2xl"
+        >
           <label className="font-bold">Frage:</label>
           <textarea
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            className="border p-2 rounded w-full text-black mb-2"
-            rows="4"
+            className="border p-2 rounded w-full text-white mb-2 bg-gray-500 text-xl"
+            rows="6"
           />
 
-          <label className="font-bold">Antwort:</label>
+          <label className="font-bold ">Antwort:</label>
           <textarea
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
-            className="border p-2 rounded w-full text-black mb-4"
-            rows="4"
+            className="border p-2 rounded w-full text-white mb-4 bg-gray-500 text-xl"
+            rows="6"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
+            className="bg-gray-800 text-white px-4 py-2 rounded-2xl hover:bg-gray-900"
           >
-            {loading ? "Lädt..." : "Lernkarte hinzufügen"}
+            {loading ? "Lädt..." : "Hinzufügen"}
           </button>
         </form>
       </div>

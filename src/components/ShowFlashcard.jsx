@@ -24,7 +24,7 @@ const ShowFlashcard = ({ question, answer, onDelete }) => {
           <FaTrashAlt size={20} />
         </div>
         <div
-          className={`absolute top-0 left-0 right-0 text-sm text-center py-2 font-semibold bg-gray-800 bg-opacity-75 z-10 rounded-t-xl rounded-b-none shadow-lg ${
+          className={`absolute top-0 left-0 right-0 text-lg text-center py-2 font-semibold bg-gray-800 bg-opacity-75 z-10 rounded-t-xl rounded-b-none shadow-lg ${
             flipped ? "rotate-y-180" : ""
           }`}
         >
@@ -32,14 +32,14 @@ const ShowFlashcard = ({ question, answer, onDelete }) => {
         </div>
 
         <div
-          className="absolute w-full h-full bg-gray-400 flex items-center justify-center 
-                    rounded-xl  p-4 whitespace-pre-wrap overflow-auto border-2 border-stone-700 backface-hidden "
+          className="absolute w-full h-full bg-gray-500 flex items-center justify-center 
+                    rounded-xl  p-4 whitespace-pre-wrap overflow-auto border-2 border-gray-700 backface-hidden "
         >
           {question}
         </div>
         <div
-          className="absolute w-full h-full bg-gray-400 flex items-center justify-center
-                 rounded-xl p-4 whitespace-pre-wrap overflow-auto border-2 border-stone-700 backface-hidden rotate-y-180"
+          className="absolute w-full h-full bg-gray-500 flex items-center justify-center
+                 rounded-xl p-4 whitespace-pre-wrap overflow-auto border-2 border-gray-700 backface-hidden rotate-y-180"
         >
           {answer}
         </div>
