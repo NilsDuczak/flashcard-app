@@ -1,7 +1,7 @@
 import { useState } from "react";
 import supabase from "./supabaseClient";
 
-const AddSet = ({ onAdd }) => {
+const AddSetModal = ({ onAdd }) => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +34,7 @@ const AddSet = ({ onAdd }) => {
 
   return (
     <form onSubmit={handleSubmit} className="p-4 border rounded">
-      <div className="mb-2">
+      <div className="mb-2 font-bold">
         <input
           type="text"
           placeholder="Name des Sets"
@@ -46,7 +46,7 @@ const AddSet = ({ onAdd }) => {
       <button
         type="submit"
         disabled={loading}
-        className="bg-stone-700 text-white px-8 py-2 rounded-lg  hover:bg-stone-600 w-full "
+        className="bg-gray-700 text-white px-8 py-2 rounded-lg  hover:bg-gray-800 w-full "
       >
         {loading ? "Lädt..." : "Set hinzufügen"}
       </button>
@@ -54,4 +54,4 @@ const AddSet = ({ onAdd }) => {
   );
 };
 
-export default AddSet;
+export default AddSetModal;

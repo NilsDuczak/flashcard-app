@@ -1,22 +1,15 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import supabase from "./components/supabaseClient";
-import Flashcard from "./components/FlashCard";
 import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
+import AddFlashcardModal from "./components/AddFlashcardModal";
+import ShowFlashcard from "./components/ShowFlashCard";
 
 function App() {
-  {
-    /*States */
-  }
-
   const [sets, setSets] = useState([]);
   const [selectedSet, setSelectedSet] = useState(null);
   const [flashcards, setFlashcards] = useState([]);
-
-  {
-    /*Use Effects */
-  }
+  const [showAddFlashcardModal, setShowAddFlashcardModal] = useState(false);
 
   useEffect(() => {
     const fetchSets = async () => {
@@ -24,7 +17,6 @@ function App() {
       if (error) {
         console.log("Error fetching sets:", error);
       } else {
-        console.log("Fetched sets:", data);
         setSets(data);
       }
     };
@@ -41,17 +33,12 @@ function App() {
         if (error) {
           console.log("Error fetching flashcards:", error);
         } else {
-          console.log("Fetched flashcards:", data);
           setFlashcards(data);
         }
       };
       fetchFlashcards();
     }
   }, [selectedSet]);
-
-  {
-    /*Functions */
-  }
 
   const handleAddSet = (newSet) => {
     setSets([...sets, newSet]);
@@ -63,9 +50,8 @@ function App() {
 
   const handleDelete = async (id) => {
     const { error } = await supabase.from("flashcards").delete().eq("id", id);
-
     if (error) {
-      console.log("Fehler beim löschen der Karte", error);
+      console.log("Fehler beim Löschen der Karte", error);
     } else {
       setFlashcards(flashcards.filter((flashcard) => flashcard.id !== id));
     }
@@ -76,21 +62,19 @@ function App() {
       .from("flashcards")
       .delete()
       .eq("set_id", setId);
-
     if (deleteCardsError) {
-      console.log("Fehler beim löschen der Karten:", deleteCardsError);
+      console.log("Fehler beim Löschen der Karten:", deleteCardsError);
       return;
     }
+
     const { error: deleteSetError } = await supabase
       .from("sets")
       .delete()
       .eq("id", setId);
-
     if (deleteSetError) {
-      console.log("Fehler beim löschen des Sets", deleteSetError);
+      console.log("Fehler beim Löschen des Sets", deleteSetError);
     } else {
       setSets(sets.filter((set) => set.id !== setId));
-
       if (selectedSet?.id === setId) {
         setSelectedSet(null);
       }
@@ -98,28 +82,23 @@ function App() {
   };
 
   return (
-    <div className="flex ">
+    <div className="flex flex-col min-h-screen">
       <Sidebar
         sets={sets}
         selectedSet={selectedSet}
         setSelectedSet={setSelectedSet}
         onAddSet={handleAddSet}
         onDeleteSet={handleDeleteSet}
-        onAdd={handleAddFlashCard}
-        setId={selectedSet?.id}
+        onOpenAddFlashcard={() => setShowAddFlashcardModal(true)}
       />
-      <div className="flex flex-col flex-1 ml-64 ">
-        <Header
-          selectedSet={selectedSet}
-          setId={selectedSet?.id}
-          onAdd={handleAddFlashCard}
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xlg:grid-cols-4 gap-4 px-4 ">
+
+      <main className="flex flex-col flex-1 ml-64">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xlg:grid-cols-4 gap-4 px-4">
           {selectedSet && (
             <>
               {flashcards.length > 0 ? (
                 flashcards.map((card) => (
-                  <Flashcard
+                  <ShowFlashcard
                     key={card.id}
                     question={card.question}
                     answer={card.answer}
@@ -127,14 +106,24 @@ function App() {
                   />
                 ))
               ) : (
-                <p className="text-stone-900 text-xl mt-80 text-center">
-                  Füge Karten hinzu oder wähle ein anderes Lernset aus.
-                </p>
+                <div className="col-span-4 md:col-span-4 lg:col-span-4 xlg:col-span-4 flex justify-center items-center h-24 text-gray-50 bg-gray-600 text-2xl mt-96 text-center rounded-xl ">
+                  <p className="">
+                    Füge Karten hinzu oder wähle ein anderes Set aus.
+                  </p>
+                </div>
               )}
             </>
           )}
         </div>
-      </div>
+      </main>
+
+      {showAddFlashcardModal && (
+        <AddFlashcardModal
+          setId={selectedSet?.id}
+          onAdd={handleAddFlashCard}
+          onClose={() => setShowAddFlashcardModal(false)}
+        />
+      )}
     </div>
   );
 }
